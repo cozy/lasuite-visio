@@ -196,6 +196,7 @@ export const Header = () => {
                 to="/"
               >
                 <Marianne />
+                Bonjour Twake
                 <HStack gap={0}>
                   <Logo />
                   <BetaBadge />
