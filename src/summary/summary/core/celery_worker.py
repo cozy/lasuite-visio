@@ -36,6 +36,28 @@ if settings.sentry_dsn and settings.sentry_is_enabled:
         sentry_sdk.init(dsn=settings.sentry_dsn, enable_tracing=True)
 
 
+DEFAULT_EMPTY_TRANSCRIPTION = """
+**Aucun contenu audio n’a été détecté dans votre transcription.**
+
+
+*Si vous pensez qu’il s’agit d’une erreur, n’hésitez pas à contacter
+notre support technique : visio@numerique.gouv.fr*
+
+.
+
+.
+
+.
+
+Quelques points que nous vous conseillons de vérifier :
+- Un micro était-il activé ?
+- Étiez-vous suffisamment proche ?
+- Le micro est-il de bonne qualité ?
+- L’enregistrement dure-t-il plus de 30 secondes ?
+
+"""
+
+
 def save_audio_stream(audio_stream, chunk_size=32 * 1024):
     """Save an audio stream to a temporary OGG file."""
     with tempfile.NamedTemporaryFile(suffix=".ogg", delete=False) as tmp:
@@ -64,9 +86,9 @@ def format_segments(transcription_data):
     conversation with speaker labels.
     """
     formatted_output = ""
-    if not transcription_data or not hasattr(transcription_data, 'segments'):
-        if isinstance(transcription_data, dict) and 'segments' in transcription_data:
-            segments = transcription_data['segments']
+    if not transcription_data or not hasattr(transcription_data, "segments"):
+        if isinstance(transcription_data, dict) and "segments" in transcription_data:
+            segments = transcription_data["segments"]
         else:
             return "Error: Invalid transcription data format"
     else:
@@ -75,8 +97,8 @@ def format_segments(transcription_data):
     previous_speaker = None
 
     for segment in segments:
-        speaker = segment.get('speaker', 'UNKNOWN_SPEAKER')
-        text = segment.get('text', '')
+        speaker = segment.get("speaker", "UNKNOWN_SPEAKER")
+        text = segment.get("text", "")
         if text:
             if speaker != previous_speaker:
                 formatted_output += f"\n\n **{speaker}**: {text}"
@@ -84,6 +106,7 @@ def format_segments(transcription_data):
                 formatted_output += f" {text}"
             previous_speaker = speaker
     return formatted_output
+
 
 def post_with_retries(url, data):
     """Send POST request with automatic retries."""
@@ -218,7 +241,11 @@ def process_audio_transcribe_summarize_v2(filename: str, email: str, sub: str):
             os.remove(temp_file_path)
             logger.debug("Temporary file removed: %s", temp_file_path)
 
-    formatted_transcription = format_segments(transcription)
+    formatted_transcription = (
+        DEFAULT_EMPTY_TRANSCRIPTION
+        if not transcription.segments
+        else format_segments(transcription)
+    )
 
     data = {
         "title": "Transcription",
@@ -236,5 +263,3 @@ def process_audio_transcribe_summarize_v2(filename: str, email: str, sub: str):
     logger.debug("Response body: %s", response.text)
 
     # TODO - integrate summarize the transcript and create a new document.
-
-

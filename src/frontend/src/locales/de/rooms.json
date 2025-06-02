@@ -223,6 +223,11 @@
       "loading": "Transkription wird gestartet",
       "linkMore": "Mehr erfahren"
     },
+    "notAdminOrOwner": {
+      "heading": "Zugriff eingeschränkt",
+      "body": "Aus Sicherheitsgründen kann nur der Ersteller oder ein Administrator des Meetings eine Transkription (Beta) starten.",
+      "linkMore": "Mehr erfahren"
+    },
     "stop": {
       "heading": "Transkription läuft...",
       "body": "Die Transkription deines Meetings läuft. Du erhältst das Ergebnis per E-Mail, sobald das Meeting beendet ist.",
@@ -230,7 +235,7 @@
     },
     "stopping": {
       "heading": "Daten werden gespeichert…",
-      "body": "Dieser Vorgang kann einige Minuten dauern. Danke für deine Geduld."
+      "body": "Sie können das Meeting verlassen, wenn Sie möchten; die Aufzeichnung wird automatisch beendet."
     },
     "beta": {
       "heading": "Werde Beta-Tester",
@@ -254,9 +259,14 @@
       "loading": "Aufzeichnung wird gestartet",
       "linkMore": "Mehr erfahren"
     },
+    "notAdminOrOwner": {
+      "heading": "Zugriff eingeschränkt",
+      "body": "Aus Sicherheitsgründen kann nur der Ersteller oder ein Administrator des Meetings eine videoaufnahme (Beta) starten.",
+      "linkMore": "Mehr erfahren"
+    },
     "stopping": {
       "heading": "Daten werden gespeichert…",
-      "body": "Dieser Vorgang kann einige Minuten dauern. Danke für deine Geduld."
+      "body": "Sie können das Meeting verlassen, wenn Sie möchten; die Aufzeichnung wird automatisch beendet."
     },
     "stop": {
       "heading": "Aufzeichnung läuft…",

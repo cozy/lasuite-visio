@@ -638,10 +638,7 @@ class Base(Configuration):
                 release=get_release(),
                 integrations=[DjangoIntegration()],
             )
-
-            # Add the application name to the Sentry scope
-            scope = sentry_sdk.get_global_scope()
-            scope.set_tag("application", "backend")
+            sentry_sdk.set_tag("application", "backend")
 
             # Ignore the logs added by the DockerflowMiddleware
             ignore_logger("request.summary")
@@ -800,6 +797,14 @@ class Feature(Production):
 class Staging(Production):
     """
     Staging environment settings
+
+    nota bene: it should inherit from the Production environment.
+    """
+
+
+class Sandbox(Production):
+    """
+    Sandbox environment settings
 
     nota bene: it should inherit from the Production environment.
     """

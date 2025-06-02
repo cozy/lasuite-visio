@@ -223,6 +223,11 @@
       "loading": "Démarrage de la transcription",
       "linkMore": "En savoir plus"
     },
+    "notAdminOrOwner": {
+      "heading": "Accès restreint",
+      "body": "Pour des raisons de sécurité, seul le créateur ou un administrateur de la réunion peut lancer une transcription (beta).",
+      "linkMore": "En savoir plus"
+    },
     "stop": {
       "heading": "Transcription en cours …",
       "body": "La transcription de votre réunion est en cours. Vous recevrez le resultat par email une fois la réunion terminée.",
@@ -230,7 +235,7 @@
     },
     "stopping": {
       "heading": "Sauvegarde de vos données…",
-      "body": "Cette opération peut durer quelques minutes. Merci de votre patience."
+      "body": "Vous pouvez quitter la réunion si vous le souhaitez, la sauvegarde se terminera automatiquement."
     },
     "beta": {
       "heading": "Devenez beta testeur",
@@ -254,9 +259,14 @@
       "loading": "Démarrage de l'enregistrement",
       "linkMore": "En savoir plus"
     },
+    "notAdminOrOwner": {
+      "heading": "Accès restreint",
+      "body": "Pour des raisons de sécurité, seul le créateur ou un administrateur de la réunion peut lancer un enregistrement (beta).",
+      "linkMore": "En savoir plus"
+    },
     "stopping": {
       "heading": "Sauvegarde de vos données…",
-      "body": "Cette opération peut durer quelques minutes. Merci de votre patience."
+      "body": "Vous pouvez quitter la réunion si vous le souhaitez, la sauvegarde se terminera automatiquement."
     },
     "stop": {
       "heading": "Enregistrement en cours …",
