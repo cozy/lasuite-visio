@@ -7,5 +7,12 @@ export const getRouteUrl = (
   params?: any
 ) => {
   const to = getRoutePath(routeName, params)
+  // Twake override: update link redirection to take into account bridge URL
+  // document.referrer does not contains #/bridge
+  // window.parent.location not accessible due to cross origin
+  if (import.meta.env.VITE_BRIDGE_TARGET_ORIGIN && import.meta.env.VITE_BRIDGE_TARGET_ORIGIN_PREFIX) {
+    return `${import.meta.env.VITE_BRIDGE_TARGET_ORIGIN}${import.meta.env.VITE_BRIDGE_TARGET_ORIGIN_PREFIX}${to}`
+  }
+
   return `${window.location.origin}${to}`
 }
