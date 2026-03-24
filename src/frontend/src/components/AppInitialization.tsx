@@ -4,6 +4,7 @@ import { useAnalytics } from '@/features/analytics/hooks/useAnalytics'
 import { useSupport } from '@/features/support/hooks/useSupport'
 import { useSyncUserPreferencesWithBackend } from '@/features/auth'
 import { useEffect } from 'react'
+import { CozyBridge } from 'cozy-external-bridge'
 
 export const AppInitialization = () => {
   const { data } = useConfig()
@@ -18,6 +19,17 @@ export const AppInitialization = () => {
 
   useAnalytics(analytics)
   useSupport(support)
+
+  useEffect(() => {
+    const targetOrigin = import.meta.env.VITE_BRIDGE_TARGET_ORIGIN
+    if (targetOrigin) {
+      const bridge = new CozyBridge()
+      if (bridge.isInIframe()) {
+        bridge.setupBridge(targetOrigin)
+        bridge.startHistorySyncing()
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (custom_css_url) {
