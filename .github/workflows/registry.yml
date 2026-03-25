@@ -62,6 +62,7 @@ jobs:
           target: frontend-production
           build-args: |
             DOCKER_USER=${{ env.DOCKER_USER }}:-1000
-            PUBLISH_AS_MIT=false
+            VITE_APP_TITLE=Twake Visio
+            VITE_BRIDGE_TARGET_ORIGIN_ALLOWLIST=.lin-saas.com,.localhost:8080
           push: true
           tags: ${{ env.REGISTRY }}/cozy/meet-frontend:${{ github.event.inputs.tag }}

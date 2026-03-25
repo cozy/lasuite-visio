@@ -6,6 +6,17 @@ import { useSyncUserPreferencesWithBackend } from '@/features/auth'
 import { useEffect } from 'react'
 import { CozyBridge } from 'cozy-external-bridge'
 
+const TARGET_ORIGIN_ALLOWLIST = import.meta.env.VITE_BRIDGE_TARGET_ORIGIN_ALLOWLIST
+
+const checkParentOrigin = (parentOrigin: string) => {
+  const targetOriginAllowlist = TARGET_ORIGIN_ALLOWLIST ? TARGET_ORIGIN_ALLOWLIST.split(',') : []
+
+  if (targetOriginAllowlist.some((allowedOrigin: string) => parentOrigin.endsWith(allowedOrigin))) {
+    return true
+  }
+  return false
+}
+
 export const AppInitialization = () => {
   const { data } = useConfig()
   useSyncUserPreferencesWithBackend()
@@ -21,14 +32,24 @@ export const AppInitialization = () => {
   useSupport(support)
 
   useEffect(() => {
-    const targetOrigin = import.meta.env.VITE_BRIDGE_TARGET_ORIGIN
-    if (targetOrigin) {
+    const setupBridge = async () => {
       const bridge = new CozyBridge()
       if (bridge.isInIframe()) {
-        bridge.setupBridge(targetOrigin)
-        bridge.startHistorySyncing()
+        const parentOrigin = await bridge.requestParentOrigin()
+      
+        if(parentOrigin && checkParentOrigin(parentOrigin)) {
+          bridge.setupBridge(parentOrigin)
+          bridge.startHistorySyncing()
+
+          // To store in CozyBridge ?
+          window.twake = {
+            twakeOrigin: parentOrigin + "/#/bridge"
+          }
+        } 
       }
     }
+
+    setupBridge()
   }, [])
 
   useEffect(() => {

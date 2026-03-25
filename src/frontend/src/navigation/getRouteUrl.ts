@@ -10,8 +10,8 @@ export const getRouteUrl = (
   // Twake override: update link redirection to take into account bridge URL
   // document.referrer does not contains #/bridge
   // window.parent.location not accessible due to cross origin
-  if (import.meta.env.VITE_BRIDGE_TARGET_ORIGIN && import.meta.env.VITE_BRIDGE_TARGET_ORIGIN_PREFIX) {
-    return `${import.meta.env.VITE_BRIDGE_TARGET_ORIGIN}${import.meta.env.VITE_BRIDGE_TARGET_ORIGIN_PREFIX}${to}`
+  if (window?.twake?.twakeOrigin) {
+    return `${window.twake.twakeOrigin}${to}`
   }
 
   return `${window.location.origin}${to}`
